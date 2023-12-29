@@ -22,6 +22,10 @@
       "code": "+I is a ,comment.!!!",
       "expect": "a",
       "input": "a"
+    },
+    {
+      "code": ".",
+      "expect": "\\NUL"
     }
   ]
 }

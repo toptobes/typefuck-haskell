@@ -29,6 +29,7 @@ default-extensions:
   - TypeFamilies
   - GADTs
   - ViewPatterns
+  - PatternSynonyms
 
 dependencies:
   - name: base

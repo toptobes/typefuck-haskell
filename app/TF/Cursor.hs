@@ -5,24 +5,36 @@ module TF.Cursor where
 import GHC.TypeLits (Symbol, UnconsSymbol, type(+), type(-))
 import TF.Utils (Listify, SCons)
 
-type Cursor = (Nat, [Char], Char, [Char])
+type Cursor a = (Nat, [a], a, [a])
 
-type family MkCursor (sym :: Symbol) :: Cursor where
-  MkCursor code = MkCursor' (UnconsSymbol code)
+type OpsCursor = Cursor Char
+type MemCursor = Cursor Nat
 
-type family MkCursor' (sym :: SCons) :: Cursor where
-  MkCursor' ('Just '(first, rest)) = '(0, '[], first, Listify rest)
+type family MkOpsCursor (ops :: Symbol) :: OpsCursor where
+  MkOpsCursor ops = MkOpsCursor' (UnconsSymbol ops)
 
-type family SlideR (code :: Cursor) (n :: Nat) :: Cursor where
+type family MkOpsCursor' (ops :: SCons) :: OpsCursor where
+  MkOpsCursor' ('Just '(first, rest)) = '(0, '[], first, Listify rest)
+
+type family MkMemCursor (xs :: [Nat]) :: MemCursor where
+  MkMemCursor (first:rest) = '(0, '[], first, rest)
+
+type family SlideR (code :: Cursor a) (n :: Nat) :: Cursor a where
   SlideR code 0 = code
   SlideR '(idx, as, current, b:bs) n = SlideR '(idx + 1, current:as, b, bs) (n - 1)
 
-type family SlideL (code :: Cursor) (n :: Nat) :: Cursor where
+type family SlideL (code :: Cursor a) (n :: Nat) :: Cursor a where
   SlideL code 0 = code
   SlideL '(idx, a:as, current, bs) n = SlideL '(idx - 1, as, a, current:bs) (n - 1)
 
-type family Current (code :: Cursor) :: Char where
-  Current '(_, _, current, _) = current 
+type family GetCursor (code :: Cursor a) :: a where
+  GetCursor '(_, _, current, _) = current 
 
-type family Idx (code :: Cursor) :: Nat where
+type family GetNext (code :: Cursor a) :: a where
+  GetNext '(_, _, _, next:_) = next 
+
+type family SetCursor (code :: Cursor a) (v :: a) :: Cursor a where
+  SetCursor '(ptr, before, _, after) v = '(ptr, before, v, after) 
+
+type family Idx (code :: Cursor a) :: Nat where
   Idx '(idx, _, _, _) = idx

@@ -22,12 +22,10 @@ type Cursor a =
 {- | An association list to hold the index of each open bracket and its closing counterpart -}
 type BracketLUT = [(Nat, Nat)]
 
-{- | The state of the brainfuck engine
-   (N.B. I also want to change the memory to be a 'Cursor Nat') -}
+{- | The state of the brainfuck engine -}
 type TFState = 
   ( Cursor Char -- ^ The cursor for moving through the code
-  , [Nat]       -- ^ The memory tape
-  ,  Nat        -- ^ The pointer to the currently selected cell
+  , Cursor Nat  -- ^ The cursor for the memory tape
   , Symbol      -- ^ The input to the program
   , Symbol      -- ^ The output for the program
   , BracketLUT  -- ^ The aforementioned LUT for the []s

@@ -44,6 +44,7 @@ executable app
           TypeFamilies
           GADTs
           ViewPatterns
+          PatternSynonyms
     ghc-options: -Wall -Wno-unrecognised-pragmas -freduction-depth=0
     build-depends:
           base >=4.16.4.0
@@ -79,6 +80,7 @@ executable mktape
           TypeFamilies
           GADTs
           ViewPatterns
+          PatternSynonyms
     ghc-options: -Wall -Wno-unrecognised-pragmas -freduction-depth=0 -main-is GenTape
     build-depends:
           base >=4.16.4.0
@@ -115,6 +117,7 @@ executable mktests
           TypeFamilies
           GADTs
           ViewPatterns
+          PatternSynonyms
     ghc-options: -Wall -Wno-unrecognised-pragmas -freduction-depth=0 -main-is GenTests
     build-depends:
           base >=4.16.4.0
@@ -151,6 +154,7 @@ executable valtests
           TypeFamilies
           GADTs
           ViewPatterns
+          PatternSynonyms
     ghc-options: -Wall -Wno-unrecognised-pragmas -freduction-depth=0 -main-is ValTests
     build-depends:
           base >=4.16.4.0
