@@ -1,4 +1,4 @@
-.PHONY: tape, run, tests, repl
+.PHONY: tape, run, test, repl
 
 tape:
 ifndef TAPE
@@ -16,7 +16,7 @@ run:
 repl:
 	@cabal repl app
 
-tests:
+test:
 	@if command -v bun >/dev/null 2>&1; then \
 		bun spec/run-tests.mjs; \
 	else \

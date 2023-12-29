@@ -3,29 +3,45 @@
   "tests": [
     {
       "code": ">++><++++++++++++++++++++++++++++++++-.",
-      "expect": "!"
+      "expect": "!",
+      "prop": "basic ops"
     },
     {
       "code": "+,.",
       "expect": "a",
-      "input": "a"
+      "input": "a",
+      "prop": "basic IO"
     },
     {
       "code": "+++++++++++++++++>++++++++++++++++[<+>-]<.",
-      "expect": "!"
+      "expect": "!",
+      "prop": "basic looping"
     },
     {
       "code": "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.",
-      "expect": "Hello World!"
+      "expect": "Hello World!",
+      "prop": "more advanced code"
     },
     {
       "code": "+I is a ,comment.!!!",
       "expect": "a",
-      "input": "a"
+      "input": "a",
+      "prop": "comments"
     },
     {
       "code": ".",
-      "expect": "\\NUL"
+      "expect": "\\NUL",
+      "prop": "single-command code"
+    },
+    {
+      "code": "-.",
+      "expect": "\\255",
+      "prop": "underflow"
+    },
+    {
+      "code": "-+.",
+      "expect": "\\NUL",
+      "prop": "overflow"
     }
   ]
 }

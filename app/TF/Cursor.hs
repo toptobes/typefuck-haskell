@@ -30,9 +30,6 @@ type family SlideL (code :: Cursor a) (n :: Nat) :: Cursor a where
 type family GetCursor (code :: Cursor a) :: a where
   GetCursor '(_, _, current, _) = current 
 
-type family GetNext (code :: Cursor a) :: a where
-  GetNext '(_, _, _, next:_) = next 
-
 type family SetCursor (code :: Cursor a) (v :: a) :: Cursor a where
   SetCursor '(ptr, before, _, after) v = '(ptr, before, v, after) 
 

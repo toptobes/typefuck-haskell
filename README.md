@@ -111,7 +111,7 @@ You can also use `reifySF` from `Utils` to create a concrete string, but that ta
 
 ### Running the tests
 
-You can run the tests with `make tests` w/ bun/node (or manually executing `spec/run-tests.mjs`).
+You can run the tests with `make test` w/ bun/node (or manually executing `spec/run-tests.mjs`).
 You can add your own tests to `spec/tests.json` as you please.
 
 ## Disclaimer

@@ -19,9 +19,12 @@
           },
           "input": {
             "type": "string"
+          },
+          "prop": {
+            "type": "string"
           }
         },
-        "required": ["code", "expect"],
+        "required": ["code", "expect", "prop"],
         "additionalProperties": false
       }
     }

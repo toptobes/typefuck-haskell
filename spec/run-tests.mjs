@@ -19,9 +19,10 @@ exec(`echo ":script ${TEST_FP}" | cabal repl app -v0`, (error, stdout, stderr) =
     result,
   }));
 
-  const output = zipped.map(({ code, input, expect, result }) => [
+  const output = zipped.map(({ code, input, expect, result, prop }) => [
     `Ran code '${code}'`,
     (input) ? `with input '${input}'` : `with no input`,
+    `to test ${prop}`,
     ` - Expect: '${expect}'`,
     ` - Actual: '${result}'`,
     (expect === result) ? 'Success!' : 'Failure...',
