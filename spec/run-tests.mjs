@@ -1,6 +1,6 @@
 import { writeFileSync, unlinkSync } from "node:fs";
 import { exec } from "child_process";
-import tests from './tests.json' assert { type: 'json' };
+import { tests } from './tests.json' assert { type: 'json' };
 
 const TEST_FP = "spec/generated-tests";
 
@@ -14,10 +14,10 @@ exec(`echo ":script ${TEST_FP}" | cabal repl app -v0`, (error, stdout, stderr) =
 
   const results = stdout.split('\n').filter(s => s.startsWith('=')).map(s => s.slice(3, -1));
 
-  const zipped = zip(tests, results).map((([test, result]) => ({
+  const zipped = zip(tests, results).map(([test, result]) => ({
     ...test,
     result,
-  })));
+  }));
 
   const output = zipped.map(({ code, input, expect, result }) => [
     `Ran code '${code}'`,

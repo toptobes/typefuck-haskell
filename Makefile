@@ -1,4 +1,4 @@
-.PHONY: tape, run, tests
+.PHONY: tape, run, tests, repl
 
 tape:
 ifndef TAPE
@@ -12,6 +12,9 @@ endif
 
 run:
 	@cabal run app -v0
+
+repl:
+	@cabal repl app
 
 tests:
 	@if command -v bun >/dev/null 2>&1; then \
