@@ -1,0 +1,59 @@
+name: typefuck-haskell
+version: 0.1.0.0
+synopsis: Type-level brainfuck
+license: MIT
+author: toptobes
+
+language: GHC2021
+
+ghc-options:
+  - -Wall
+  - -Wno-unrecognised-pragmas
+  - -freduction-depth=0
+  # - -O1
+
+default-extensions:
+  - LambdaCase
+  - BlockArguments
+  - RecordWildCards
+  - OverloadedRecordDot
+  - OverloadedLabels
+  - OverloadedStrings
+  - DuplicateRecordFields
+  - DeriveAnyClass
+  - DerivingStrategies
+  - FunctionalDependencies
+  - UnicodeSyntax
+  - LinearTypes
+  - DataKinds
+  - TypeFamilies
+  - GADTs
+  - ViewPatterns
+
+dependencies:
+  - name: base
+    version: ">=4.16.4.0"
+    mixin:
+      - hiding (Prelude)
+  - name: relude
+    version: ">=1.2.0.0"
+    mixin:
+      - (Relude as Prelude)
+      - ""
+  
+executables:
+  app:
+    main: Main.hs
+    source-dirs: app
+  mktape:
+    main: GenTape.hs
+    source-dirs: scripts
+    ghc-options: -main-is GenTape
+  mktests:
+    main: GenTests.hs
+    source-dirs: scripts
+    ghc-options: -main-is GenTests
+  valtests:
+    main: ValTests.hs
+    source-dirs: scripts
+    ghc-options: -main-is ValTests

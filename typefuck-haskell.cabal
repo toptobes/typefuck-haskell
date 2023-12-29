@@ -1,0 +1,162 @@
+cabal-version: 2.0
+
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:               typefuck-haskell
+version:            0.1.0.0
+synopsis:           Type-level brainfuck
+license:            MIT
+license-file:       LICENSE
+author:             toptobes
+maintainer:         toptobes
+build-type:         Simple
+
+executable app
+    main-is: Main.hs
+    other-modules:
+          TF.BracketLUT
+          TF.Core
+          TF.Cursor
+          TF.Generated.Tape
+          TF.Utils
+          Utils
+          Paths_typefuck_haskell
+    autogen-modules:
+          Paths_typefuck_haskell
+    hs-source-dirs:
+          app
+    default-extensions:
+          LambdaCase
+          BlockArguments
+          RecordWildCards
+          OverloadedRecordDot
+          OverloadedLabels
+          OverloadedStrings
+          DuplicateRecordFields
+          DeriveAnyClass
+          DerivingStrategies
+          FunctionalDependencies
+          UnicodeSyntax
+          LinearTypes
+          DataKinds
+          TypeFamilies
+          GADTs
+          ViewPatterns
+    ghc-options: -Wall -Wno-unrecognised-pragmas -freduction-depth=0
+    build-depends:
+          base >=4.16.4.0
+        , relude >=1.2.0.0
+    mixins:
+          base hiding (Prelude)
+        , relude (Relude as Prelude)
+        , relude 
+    default-language: GHC2021
+
+executable mktape
+    main-is: GenTape.hs
+    other-modules:
+          Paths_typefuck_haskell
+    autogen-modules:
+          Paths_typefuck_haskell
+    hs-source-dirs:
+          scripts
+    default-extensions:
+          LambdaCase
+          BlockArguments
+          RecordWildCards
+          OverloadedRecordDot
+          OverloadedLabels
+          OverloadedStrings
+          DuplicateRecordFields
+          DeriveAnyClass
+          DerivingStrategies
+          FunctionalDependencies
+          UnicodeSyntax
+          LinearTypes
+          DataKinds
+          TypeFamilies
+          GADTs
+          ViewPatterns
+    ghc-options: -Wall -Wno-unrecognised-pragmas -freduction-depth=0 -main-is GenTape
+    build-depends:
+          base >=4.16.4.0
+        , relude >=1.2.0.0
+    mixins:
+          base hiding (Prelude)
+        , relude (Relude as Prelude)
+        , relude 
+    default-language: GHC2021
+
+executable mktests
+    main-is: GenTests.hs
+    other-modules:
+          GenTape
+          Paths_typefuck_haskell
+    autogen-modules:
+          Paths_typefuck_haskell
+    hs-source-dirs:
+          scripts
+    default-extensions:
+          LambdaCase
+          BlockArguments
+          RecordWildCards
+          OverloadedRecordDot
+          OverloadedLabels
+          OverloadedStrings
+          DuplicateRecordFields
+          DeriveAnyClass
+          DerivingStrategies
+          FunctionalDependencies
+          UnicodeSyntax
+          LinearTypes
+          DataKinds
+          TypeFamilies
+          GADTs
+          ViewPatterns
+    ghc-options: -Wall -Wno-unrecognised-pragmas -freduction-depth=0 -main-is GenTests
+    build-depends:
+          base >=4.16.4.0
+        , relude >=1.2.0.0
+    mixins:
+          base hiding (Prelude)
+        , relude (Relude as Prelude)
+        , relude 
+    default-language: GHC2021
+
+executable valtests
+    main-is: ValTests.hs
+    other-modules:
+          GenTape
+          Paths_typefuck_haskell
+    autogen-modules:
+          Paths_typefuck_haskell
+    hs-source-dirs:
+          scripts
+    default-extensions:
+          LambdaCase
+          BlockArguments
+          RecordWildCards
+          OverloadedRecordDot
+          OverloadedLabels
+          OverloadedStrings
+          DuplicateRecordFields
+          DeriveAnyClass
+          DerivingStrategies
+          FunctionalDependencies
+          UnicodeSyntax
+          LinearTypes
+          DataKinds
+          TypeFamilies
+          GADTs
+          ViewPatterns
+    ghc-options: -Wall -Wno-unrecognised-pragmas -freduction-depth=0 -main-is ValTests
+    build-depends:
+          base >=4.16.4.0
+        , relude >=1.2.0.0
+    mixins:
+          base hiding (Prelude)
+        , relude (Relude as Prelude)
+        , relude 
+    default-language: GHC2021
