@@ -2,37 +2,67 @@ import { writeFileSync, unlinkSync } from "node:fs";
 import { exec } from "child_process";
 import { tests } from './tests.json' assert { type: 'json' };
 
-const TEST_FP = "spec/generated-tests";
+const TESTS_FP = "spec/generated-tests";
 
-writeFileSync(TEST_FP, tests.map(({ code, input }) => `:k! TF.Core.RunTF "${code}" "${input}"`).join('\n'));
+writeFileSync(TESTS_FP, tests.map(({ code, input }) => `:k! TF.Core.RunTF "${code}" "${input}"`).join('\n'));
 
-exec(`echo ":script ${TEST_FP}" | cabal repl app -v0`, (error, stdout, stderr) => {
+exec(`echo ":script ${TESTS_FP}" | cabal repl app -v0`, (error, stdout, stderr) => {
   if (error || stderr) {
     console.log(`error: ${error.message}`, `stderr: ${stderr}`);
     return;
   }
 
-  const results = stdout.split('\n').filter(s => s.startsWith('=')).map(s => s.slice(3, -1));
+  const rawResults = stdout.split('\n').filter(s => s.startsWith('=')).map(s => s.slice(3, -1));
 
-  const zipped = zip(tests, results).map(([test, result]) => ({
-    ...test,
-    result,
-  }));
+  const [messages, successes] = zip(tests, rawResults)
+    .map(([test, result]) => ({
+      ...test,
+      result,
+    }))
+    .map(({ code, input, expect, result, prop }) => {
+      const success = expect === result;
 
-  const output = zipped.map(({ code, input, expect, result, prop }) => [
-    `Ran code '${code}'`,
-    (input) ? `with input '${input}'` : `with no input`,
-    `to test ${prop}`,
-    ` - Expect: '${expect}'`,
-    ` - Actual: '${result}'`,
-    (expect === result) ? 'Success!' : 'Failure...',
-  ].join('\n')).join('\n\n');
+      const message = [
+        `Ran code '${code}'`,
+        (input) ? `with input '${input}'` : `with no input`,
+        `to test ${prop}`,
+        ` - Expect: '${expect}'`,
+        ` - Actual: '${result}'`,
+        (success) ? 'Success!' : 'Failure...',
+      ].join('\n')
+
+      return [message, success];
+    })
+    .unzip();
+
+  const numOkay = successes.filter(x => x).length;
+  const numFail = successes.length;
+
+  const failures = zip(tests, successes)
+    .filter(([_, success]) => !success)
+    .map(([{ prop }]) => (
+      ` - failed ${prop}`
+    ))
+    .join('\n');
+
+  const output = [
+    messages.join('\n\n'),
+    '\n',
+    '\n',
+    `Results: ${numOkay}/${numFail}`,
+    failures && '\n',
+    failures
+  ].join('');
 
   console.log(output);
   
-  unlinkSync(TEST_FP);
+  unlinkSync(TESTS_FP);
 });
 
 const zip = (a, b) => a.map((k, i) => [k, b[i]]);
+
+Array.prototype.unzip = function() {
+  return this.reduceRight(([as, bs], [a, b]) => [[a, ...as], [b, ...bs]], [[], []]);
+}
 
 export {}
