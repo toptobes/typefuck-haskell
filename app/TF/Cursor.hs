@@ -2,7 +2,7 @@
 
 module TF.Cursor where
 
-import GHC.TypeLits (Symbol, UnconsSymbol, type(+), type(-))
+import GHC.TypeLits (ErrorMessage(..), Symbol, TypeError, UnconsSymbol, type(+), type(-))
 import TF.Utils (Listify, SCons)
 
 type Cursor a = (Nat, [a], a, [a])
@@ -15,6 +15,7 @@ type family MkOpsCursor (ops :: Symbol) :: OpsCursor where
 
 type family MkOpsCursor' (ops :: SCons) :: OpsCursor where
   MkOpsCursor' ('Just '(first, rest)) = '(0, '[], first, Listify rest)
+  MkOpsCursor' 'Nothing = (TypeError ('Text "No code provided"))
 
 type family MkMemCursor (xs :: [Nat]) :: MemCursor where
   MkMemCursor (first:rest) = '(0, '[], first, rest)
