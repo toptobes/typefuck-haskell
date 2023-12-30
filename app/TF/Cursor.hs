@@ -22,10 +22,12 @@ type family MkMemCursor (xs :: [Nat]) :: MemCursor where
 
 type family SlideR (code :: Cursor a) (n :: Nat) :: Cursor a where
   SlideR code 0 = code
+  SlideR '(_, _, _, '[]) n = TypeError ('Text "Can't slide right any further")
   SlideR '(idx, as, current, b:bs) n = SlideR '(idx + 1, current:as, b, bs) (n - 1)
 
 type family SlideL (code :: Cursor a) (n :: Nat) :: Cursor a where
   SlideL code 0 = code
+  SlideL '(_, '[], _, _) n = TypeError ('Text "Can't slide left any further")
   SlideL '(idx, a:as, current, bs) n = SlideL '(idx - 1, as, a, current:bs) (n - 1)
 
 type family GetCursor (code :: Cursor a) :: a where

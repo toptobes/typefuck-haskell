@@ -16,6 +16,7 @@ build-type:         Simple
 executable app
     main-is: Main.hs
     other-modules:
+          TF
           TF.BracketLUT
           TF.Core
           TF.Cursor

@@ -3,7 +3,7 @@ module GenTape where
 import Data.Text as T (intercalate)
 
 input :: [Integer]
-input = replicate 10 0
+input = replicate 15 0
 
 template :: Text -> Text
 template tape = T.intercalate "\n"

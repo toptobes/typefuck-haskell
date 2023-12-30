@@ -53,7 +53,8 @@ type family DecMem (mem :: MemCursor) :: MemCursor where
 
 type family StoreInput (i :: SCons) (state :: TFState) :: Symbol where
   StoreInput ('Just '(char, rest)) '(ops, mem, _, o, lut) = InterpNext '(ops, SetCursor mem (CharToNat char), rest, o, lut)
-  StoreInput 'Nothing _ = TypeError ('Text "Ran out of input...")
+  -- StoreInput 'Nothing _ = TypeError ('Text "Ran out of input...")
+  StoreInput 'Nothing '(_, _, i, o, _) = Reverse o
 
 type family OnOpen (ord :: Ordering) (state :: TFState) where
   OnOpen 'EQ '(ops, mem, i, o, lut) = InterpNext '(SlideR ops (DistToClose lut (Idx ops)), mem, i, o, lut)
