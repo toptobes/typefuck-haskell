@@ -109,6 +109,15 @@ You can also use `reifySF` from `Utils` to create a concrete string, but that ta
 "a"
 ```
 
+### "Open" vs "Closed" inputs
+
+In the event that your input-requiring code isn't working when it should be (e.g. printing empty input), there's a
+chance it's because you're using loops but your input isn't `NUL`-terminated (i.e. it doesn't read in a closing `'\0'`
+input to stop the loop). In that case, try changing `"Hello!"` to `"Hello!\0"`.
+
+By default, when TF runs out of input, it just prints what input it has already (to emulate an interactive interpreter
+just pausing, waiting for input).
+
 ### Running the tests
 
 You can run the tests with `make test` w/ bun/node (or manually executing `spec/run-tests.mjs`).
